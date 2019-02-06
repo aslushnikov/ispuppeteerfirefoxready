@@ -1,0 +1,59 @@
+<script>
+const dataPromise = fetch('./status.json').then(response => response.json());
+const $ = document.querySelector.bind(document);
+</script>
+<style>
+  body {
+    display: flex;
+    color: #24292e;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+  .content {
+    padding-top: 2em;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logo {
+    height: 150px;
+  }
+
+  h1 {
+    font-size: 48px;
+  }
+
+  .content .results {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .status {
+    font-size: 24px;
+  }
+
+  .title {
+    font-size: 36px;
+    margin: 4em 0 2em 0;
+  }
+
+  a {
+    color: #0366d6;
+    text-decoration: none;
+  }
+</style>
+<section class=content>
+  <div class=title>Is <a href="http://npmjs.com/package/puppeteer-firefox">Puppeteer-Firefox</a> Ready?</div>
+  <div class=results>
+    <img class=logo src='./pptrffox.png'></img>
+    <div class=status>Tests Passing: <span class=ffox></span>/<span class=all></span></div>
+  </div>
+</section>
+<script>
+window.addEventListener('DOMContentLoaded', async () => {
+  const json = await dataPromise;
+  $('.all').textContent = json.allTests;
+  $('.ffox').textContent = json.firefoxTests;
+}, false);
+</script>
