@@ -1,5 +1,7 @@
 set -e
 
+git pull origin master
+
 if [ -e ./puppeteer ]; then
   cd puppeteer
   git pull origin master
