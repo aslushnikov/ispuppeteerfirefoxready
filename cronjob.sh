@@ -20,8 +20,11 @@ npm run funit -- --firefox-status | tail -1 > ../status.json
 cd ..
 
 if [ -z "$(git status --untracked-files=no --porcelain)" ]; then
+  echo 'NO CHANGES'
   exit 0;
 fi
 
 git commit -am 'chore: update status.json'
 git push origin master
+
+echo 'PUSHED NEW STATUS!'
