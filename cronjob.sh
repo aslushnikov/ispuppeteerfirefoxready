@@ -1,5 +1,6 @@
 set -e
 
+git reset --hard origin/master
 git pull origin master
 
 if [ -e ./puppeteer ]; then
