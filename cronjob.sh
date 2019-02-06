@@ -20,5 +20,5 @@ if [ -z "$(git status --untracked-files=no --porcelain)" ]; then
   exit 0;
 fi
 
-git commig -am 'chore: update status.json'
+git commit -am 'chore: update status.json'
 git push origin master
