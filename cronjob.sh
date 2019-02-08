@@ -16,8 +16,10 @@ cd experimental/puppeteer-firefox
 npm i
 cd ../..
 
-npm run funit -- --firefox-status | tail -1 > ../status.json
-cd ..
+cp ../generateStatus.js .
+node generateStatus.js > ../status.json
+# npm run funit -- --firefox-status | tail -1 > ../status.json
+# cd ..
 
 if [ -z "$(git status --untracked-files=no --porcelain)" ]; then
   echo 'NO CHANGES'

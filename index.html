@@ -10,98 +10,14 @@
 <meta name="msapplication-config" content="./favicons/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
 <title>Is Puppeteer-Firefox ready?</title>
-<script>
-const responsePromise = fetch('./status.json');
-const dataPromise = responsePromise.then(response => response.json());
-const $ = document.querySelector.bind(document);
-</script>
-<style>
-  body {
-    margin: 1em;
-    display: flex;
-    color: #24292e;
-    justify-content: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  }
-
-  .content {
-    padding-top: 2em;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .logo {
-    height: 150px;
-    margin-right: 2em;
-  }
-
-  h1 {
-    font-size: 48px;
-  }
-
-  .content .results {
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .status {
-    font-size: 24px;
-    margin-bottom: 1em;
-  }
-
-  .title {
-    font-size: 36px;
-    margin: 4em 0 2em 0;
-    text-align: right;
-  }
-
-  a {
-    color: #0366d6;
-    text-decoration: none;
-  }
-
-  .cnt, .upd {
-    font-weight: bold;
-  }
-
-  @media only screen and (max-width: 850px) {
-    .title {
-      margin: 0 0 1em 0;
-      font-size: 28px;
-      text-align: left;
-    }
-  }
-</style>
+<link rel=stylesheet href='./style.css'>
 <section class=content>
-  <div class=title>Is <a target=_blank href="http://npmjs.com/package/puppeteer-firefox">Puppeteer-Firefox</a> Ready?</div>
-  <div class=results>
+  <div style='text-align: center'>
     <img class=logo src='./pptrffox.png'></img>
-    <div>
-      <div class=status>Tests Passing: <span class=cnt></span> (<span class=ffox></span>/<span class=all></span>)</div>
-      <div class=status>Last Update: <span class=upd>6 hours ago</span>
-    </div>
   </div>
+  <div class=title>
+  Is <a target=_blank href="http://npmjs.com/package/puppeteer-firefox">Puppeteer-Firefox</a> Ready?
+  </div>
+  <div class=apidiff></div>
 </section>
-<script>
-window.addEventListener('DOMContentLoaded', async () => {
-  const response = await responsePromise;
-  const json = await dataPromise;
-  const date = new Date(response.headers.get('last-modified'));
-  const diff = Date.now() - date;
-  let time = '';
-  if (diff < 1000)
-    time = 'Just Now';
-  else if (1000 <= diff && diff <= 60 * 1000)
-    time = `${Math.round(diff / 1000)} seconds ago`;
-  else if (60 * 1000 <= diff && diff <= 60 * 60 * 1000)
-    time = `${Math.round(diff / 60 / 1000)} minutes ago`;
-  else if (60 * 60 * 1000 <= diff && diff <= 24 * 60 * 60 * 1000)
-    time = `${Math.round(diff / 60 / 60 / 1000)} hours ago`;
-  else if (24 * 60 * 60 * 1000 <= diff)
-    time = `${Math.round(diff / 24 / 60 / 60 / 1000)} days ago`;
-  $('.cnt').textContent = Math.floor(json.firefoxTests / json.allTests * 100) + '%'
-  $('.all').textContent = json.allTests;
-  $('.ffox').textContent = json.firefoxTests;
-  $('.upd').textContent = time;
-}, false);
-</script>
+<script src='./script.js' type=module></script>
