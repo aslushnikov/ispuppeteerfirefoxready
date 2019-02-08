@@ -1,4 +1,5 @@
 set -e
+set -x
 
 git reset --hard origin/master
 git pull origin master
