@@ -49,7 +49,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     <ul>${Object.entries(apiDiff).map(([className, classCoverage]) => html`
       <li>class: ${className}</li>
       <ul>${Object.entries(classCoverage.events).map(([eventName, status]) => html`
-        <li class=${status ? 'supported': 'missing'}>${lower(className)}.on('${eventName}')()</li>
+        <li class=${status ? 'supported': 'missing'}>${lower(className)}.on('${eventName}')</li>
       `)}
       </ul>
       <ul>${Object.entries(classCoverage.methods).map(([methodName, status]) => html`
