@@ -63,7 +63,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   function lower(text) {
     if (text === 'CDPSession')
       return 'cdpSession';
-    if (text === 'HSHandle')
+    if (text === 'JSHandle')
       return 'jsHandle';
     return text.substring(0, 1).toLowerCase() + text.substring(1);
   }
