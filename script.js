@@ -37,6 +37,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     ['Target', new Set([
       'createCDPSession',
     ])],
+    ['Tracing', new Set([
+      'start',
+      'stop',
+    ])],
   ]);
 
   let supportedAPI = 0;
