@@ -20,6 +20,12 @@ body {
   font-size: 36px;
 }
 
+.excluded {
+  text-decoration: line-through;
+  color: #9E9E9E;
+  cursor: help;
+}
+
 a {
   color: #0366d6;
   text-decoration: none;

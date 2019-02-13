@@ -23,10 +23,28 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   const {apiDiff} = json;
 
+  const excluded = new Map([
+    ['Coverage', new Set([
+      'startJSCoverage',
+      'stopJSCoverage',
+      'startCSSCoverage',
+      'stopCSSCoverage',
+    ])],
+    ['CDPSession', new Set([
+      'send',
+      'detach',
+    ])],
+    ['Target', new Set([
+      'createCDPSession',
+    ])],
+  ]);
+
   let supportedAPI = 0;
   let totalAPI = 0;
-  Object.values(apiDiff).forEach(coverage => {
-    Object.values(coverage.methods).forEach(status => {
+  Object.entries(apiDiff).forEach(([className, coverage]) => {
+    Object.entries(coverage.methods).forEach(([methodName, status]) => {
+      if (excluded.has(className) && excluded.get(className).has(methodName))
+        return;
       ++totalAPI;
       if (status)
         ++supportedAPI;
@@ -52,9 +70,14 @@ window.addEventListener('DOMContentLoaded', async () => {
         <li class=${status ? 'supported': 'missing'}>${lower(className)}.on('${eventName}')</li>
       `)}
       </ul>
-      <ul>${Object.entries(classCoverage.methods).map(([methodName, status]) => html`
-        <li class=${status ? 'supported': 'missing'}>${lower(className)}.${methodName}()</li>
-      `)}
+      <ul>${Object.entries(classCoverage.methods).map(([methodName, status]) => {
+        const isExcluded = excluded.has(className) && excluded.get(className).has(methodName);
+        const title = isExcluded ? 'This API is chrome-specific and will not be implemented in Puppeteer-FireFox.' : '';
+        const cls = isExcluded ? 'excluded' : (status ? 'supported' : 'missing');
+        return html`
+        <li class=${cls} title='${title}'>${lower(className)}.${methodName}()</li>
+        `;
+      })}
       </ul>
     `)}
     </ul>
