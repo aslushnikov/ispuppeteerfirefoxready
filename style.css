@@ -26,6 +26,11 @@ body {
   cursor: help;
 }
 
+summary {
+  color: #9E9E9E;
+  cursor: pointer;
+}
+
 a {
   color: #0366d6;
   text-decoration: none;

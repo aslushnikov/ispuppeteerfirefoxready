@@ -67,6 +67,17 @@ window.addEventListener('DOMContentLoaded', async () => {
       <li>Supported API: <b>${apiCoverage}%</b> (${supportedAPI}/${totalAPI})</li>
       <li>Last updated: <b>${time}</b></li>
     </ul>
+    <h4>Top Failing Suites</h4>
+    <ul>${json.topDisabledSuites.slice(0, 3).map(info => html`
+      <li>${info.name} - <b>${info.size} tests</b></li>
+    `)}
+      <details>
+        <summary>... other disabled suites ...</summary>
+        ${json.topDisabledSuites.slice(3).map(info => html`
+          <li>${info.name} - <b>${info.size} tests</b></li>
+        `)}
+      </details>
+    </ul>
     <h4>Implemented API</h4>
     <ul>${Object.entries(apiDiff).map(([className, classCoverage]) => html`
       <li>class: ${className}</li>

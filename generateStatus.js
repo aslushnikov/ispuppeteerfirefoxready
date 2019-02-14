@@ -17,16 +17,27 @@ require('./test/puppeteer.spec.js').addTests({
   testRunner,
 });
 
+
 const allTests = testRunner.tests();
+const disabledTestSuites = new Set();
 const ffoxTests = allTests.filter(test => {
   if (test.comment === FAILS_FFOX_COMMENT)
     return false;
+  let status = true;
   for (let suite = test.suite; suite; suite = suite.parentSuite) {
-    if (suite.comment === FAILS_FFOX_COMMENT)
-      return false;
+    if (suite.comment === FAILS_FFOX_COMMENT) {
+      status = false;
+      disabledTestSuites.add(suite);
+    }
+    suite._all_tests = suite._all_tests || new Set();
+    suite._all_tests.add(test);
   }
-  return true;
+  return status;;
 });
+
+const disabledSuites = Array.from(disabledTestSuites.values());
+disabledSuites.sort((a, b) => b._all_tests.size - a._all_tests.size);
+
 
 const api = require('./lib/api');
 const ffoxAPI = require('./experimental/puppeteer-firefox/lib/api');
@@ -65,5 +76,11 @@ function publicEventNames(events, className) {
 console.log(JSON.stringify({
   allTests: allTests.length,
   firefoxTests: ffoxTests.length,
-  apiDiff
+  apiDiff,
+  topDisabledSuites: disabledSuites.map(suite => {
+    return {
+      name: suite.fullName,
+      size: suite._all_tests.size
+    }
+  }),
 }));
