@@ -21,23 +21,23 @@ require('./test/puppeteer.spec.js').addTests({
 const allTests = testRunner.tests();
 const disabledTestSuites = new Set();
 const ffoxTests = allTests.filter(test => {
-  if (test.comment === FAILS_FFOX_COMMENT)
-    return false;
   let status = true;
-  for (let suite = test.suite; suite; suite = suite.parentSuite) {
-    if (suite.comment === FAILS_FFOX_COMMENT) {
+  if (test.comment === FAILS_FFOX_COMMENT)
+    status = false;
+  for (let suite = test.suite; status && suite; suite = suite.parentSuite) {
+    if (suite.comment === FAILS_FFOX_COMMENT)
       status = false;
-      disabledTestSuites.add(suite);
-    }
-    suite._all_tests = suite._all_tests || new Set();
-    suite._all_tests.add(test);
   }
-  return status;;
+  if (!status) {
+    disabledTestSuites.add(test.suite);
+    test.suite._all_tests = test.suite._all_tests || new Set();
+    test.suite._all_tests.add(test);
+  }
+  return status;
 });
 
 const disabledSuites = Array.from(disabledTestSuites.values());
 disabledSuites.sort((a, b) => b._all_tests.size - a._all_tests.size);
-
 
 const api = require('./lib/api');
 const ffoxAPI = require('./experimental/puppeteer-firefox/lib/api');
