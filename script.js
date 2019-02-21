@@ -24,6 +24,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   const {apiDiff} = json;
 
   const excluded = new Map([
+    ['Accessibility', new Set([
+      'snapshot',
+    ])],
     ['Coverage', new Set([
       'startJSCoverage',
       'stopJSCoverage',
