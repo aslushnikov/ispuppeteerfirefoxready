@@ -10,10 +10,7 @@ testRunner.addTestDSL('it_fails_ffox', 'skip', FAILS_FFOX_COMMENT);
 testRunner.addSuiteDSL('describe_fails_ffox', 'skip', FAILS_FFOX_COMMENT);
 require('./test/puppeteer.spec.js').addTests({
   product: 'Firefox',
-  puppeteer: require('./experimental/puppeteer-firefox'),
-  Errors: require('./Errors'),
-  DeviceDescriptors: require('./DeviceDescriptors'),
-  defaultBrowserOptions: {handleSIGINT: false},
+  puppeteerPath: './experimental/puppeteer-firefox',
   testRunner,
 });
 
