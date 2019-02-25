@@ -5,12 +5,13 @@
 
 const {TestRunner} = require('./utils/testrunner/');
 const testRunner = new TestRunner();
+const path = require('path');
 const FAILS_FFOX_COMMENT = Symbol('fails_ffox');
 testRunner.addTestDSL('it_fails_ffox', 'skip', FAILS_FFOX_COMMENT);
 testRunner.addSuiteDSL('describe_fails_ffox', 'skip', FAILS_FFOX_COMMENT);
 require('./test/puppeteer.spec.js').addTests({
   product: 'Firefox',
-  puppeteerPath: './experimental/puppeteer-firefox',
+  puppeteerPath: path.join(__dirname, './experimental/puppeteer-firefox'),
   testRunner,
 });
 
