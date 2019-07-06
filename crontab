@@ -1,0 +1,2 @@
+
+*/5 * * * * cd /usr/local/google/home/lushnikov/prog/cron/ispuppeteerfirefoxready && PATH=$PATH:/usr/local/google/home/lushnikov/.nvm/versions/node/v11.11.0/bin/ ./cronjob.sh &>/tmp/    ispuppeteerfirefoxready.log
